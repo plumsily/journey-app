@@ -20,7 +20,7 @@ function Header() {
     <header className="flex w-full items-center justify-between py-4">
       <div className="flex">
         <Link to="/">
-          <button className="flex items-center gap-1 text-3xl dark:hover:text-lime-300 hover:text-red-400 hover:-translate-y-[1px]  transition-all font-dmserif">
+          <button className="flex items-center gap-1 text-3xl hover:text-primary dark:hover:text-accent transition-all font-dmserif">
             <BsJournalRichtext /> Journey
           </button>
         </Link>
@@ -30,13 +30,16 @@ function Header() {
           <>
             <li>
               <Link to="/profile">
-                <button className="btn flex gap-1">
+                <button className="btn btn-primary btn-outline flex gap-1">
                   <BiUser /> Profile
                 </button>
               </Link>
             </li>
             <li>
-              <button className="btn flex gap-1" onClick={onLogout}>
+              <button
+                className="btn btn-primary btn-outline flex gap-1"
+                onClick={onLogout}
+              >
                 <BiLogOut /> Logout
               </button>
             </li>
@@ -45,14 +48,14 @@ function Header() {
           <>
             <li>
               <Link to="/login">
-                <button className="btn flex gap-1">
+                <button className="btn btn-primary dark:btn-accent flex gap-1">
                   <BiLogIn /> Login
                 </button>
               </Link>
             </li>
             <li>
               <Link to="/register">
-                <button className="btn flex gap-1">
+                <button className="btn btn-primary dark:btn-accent flex gap-1">
                   <BiUser /> Register
                 </button>
               </Link>

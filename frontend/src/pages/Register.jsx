@@ -64,7 +64,7 @@ function Register() {
 
   return (
     <>
-      <div className="card shadow-2xl w-96 mx-auto">
+      <div className="card shadow-2xl dark:shadow-dark2xl w-96 mx-auto">
         <div className="card-body">
           <section className="flex flex-col items-center gap-4 mb-6">
             <h1 className="flex text-3xl card-title font-dmserif">Register</h1>
@@ -110,7 +110,10 @@ function Register() {
               placeholder="Confirm password"
               onChange={onChange}
             />
-            <button type="submit" className="btn w-full">
+            <button
+              type="submit"
+              className="btn btn-primary dark:btn-accent w-full"
+            >
               Submit
             </button>
           </form>
