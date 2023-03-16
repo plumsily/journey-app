@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = require("../middleware/multer");
 const router = express.Router();
 const {
   getMyPosts,
@@ -9,6 +10,7 @@ const {
 } = require("../controllers/postController");
 const { protect } = require("../middleware/authMiddleware");
 
+// router.route("/").get(protect, getMyPosts).post(protect, upload.single("file"), setPost);
 router.route("/").get(protect, getMyPosts).post(protect, setPost);
 router
   .route("/:id")
