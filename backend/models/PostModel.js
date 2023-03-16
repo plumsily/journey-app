@@ -24,6 +24,10 @@ const PostSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+    cloudinaryId: {
+      type: String,
+      require: true,
+    },
     likes: {
       type: Number,
       required: true,

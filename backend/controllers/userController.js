@@ -1,13 +1,14 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
+const cloudinary = require("../middleware/cloudinary");
 const User = require("../models/UserModel");
 
 // @desc Register new user
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, file } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
@@ -26,11 +27,25 @@ const registerUser = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
+  // Upload profile image to cloudinary if uploaded, else use the default profile image
+  let result = {};
+  if (file) {
+    result = await cloudinary.uploader.upload(file.path);
+  } else {
+    result = {
+      secure_url:
+        "https://res.cloudinary.com/dgga2n5e1/image/upload/v1677651782/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM_u7klru.jpg",
+      public_id: "360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM_u7klru",
+    };
+  }
+
   //Create user into DB
   const user = await User.create({
     name,
     email,
     password: hashedPassword,
+    image: result.secure_url,
+    cloudinaryId: result.public_id,
   });
 
   if (user) {
@@ -38,6 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      image: user.image,
       token: generateToken(user._id),
     });
   } else {
@@ -60,6 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      image: user.image,
       token: generateToken(user._id),
     });
   } else {

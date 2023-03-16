@@ -11,13 +11,21 @@ const getJourneys = asyncHandler(async (req, res) => {
   res.status(200).json(journeys);
 });
 
+// @desc Get posts from one of my journeys
+// @route GET /api/journeys
+// @access Public
+const getPostsInJourney = asyncHandler(async (req, res) => {
+  const posts = await Post.find({ journey: req.params.id });
+  res.status(200).json(posts);
+});
+
 // @desc Set journey
 // @route POST /api/journeys
 // @access Private
 const setJourney = asyncHandler(async (req, res) => {
   const { title, description, tags } = req.body;
 
-  if (!req.body.title) {
+  if (!title) {
     res.status(400);
     throw new Error("Please add a title for your Journey");
   }
@@ -118,6 +126,7 @@ const deleteJourney = asyncHandler(async (req, res) => {
 
 module.exports = {
   getJourneys,
+  getPostsInJourney,
   setJourney,
   updateJourney,
   deleteJourney,
